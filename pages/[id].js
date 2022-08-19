@@ -12,7 +12,7 @@ import BottomMenu from '../components/BottomMenu'
 export const getStaticPaths=async()=> {
   const res = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
   const data = await res.json()
-  const paths=data.categories.map(async Cat=>{
+  const paths=data.categories.map(Cat=>{
   return{
     params:{ id: Cat.strCategory.toString()}
   }
