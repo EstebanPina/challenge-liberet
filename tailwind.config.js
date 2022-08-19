@@ -17,7 +17,11 @@ module.exports = {
         'magenta': '#f49897',
         'gray': '#e4e4e4',
         'pink': '#fef2f1',
-    }
+    },
+  fontFamily:{
+    'base':['Gotham','sans-serif'],
+    'sans':['Gotham','sans-serif']
+  }
   },
   plugins: [],
 }

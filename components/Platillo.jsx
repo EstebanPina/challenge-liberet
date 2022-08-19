@@ -18,7 +18,7 @@ const Platillo = ({Nombre,Precio,Restaurante,Imagen,Cantidad}) => {
         </div>
         <div className="bg-white h-1/6 align-middle flex flex-row mt-2 rounded-xl shadow-lg">
             <AccessTimeIcon className="text-yellow text-2xl m-2"></AccessTimeIcon>
-            <h2 className="flex text-sm text-dark font-semibold m-2">{formatter.format(Precio)}</h2>
+            <h2 className="flex text-md text-dark font-semibold m-2">{formatter.format(Precio)}</h2>
         </div>
 
     </div> );

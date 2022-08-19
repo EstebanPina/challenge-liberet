@@ -6,42 +6,33 @@ import Platillo from '../components/Platillo';
 import Menu from '../components/Menu';
 import { useEffect,useState } from 'react';
 import MenuBajo from '../components/MenuBajo';
-import BottomMenu from '../components/BottomMenu';
-const url="https://www.themealdb.com/api/json/v1/1/"
-/*export async function getServerSideProps() {
-  // Fetch data from external API
-  const resCat = await fetch(url+`categories.php`)
-  const dataCat = await resCat.json()
-  const resPlat = await fetch(url+`filter.php?c=Beef`)
+import { useRouter } from 'next/router'
+import BottomMenu from '../components/BottomMenu'
+
+export const getStaticPaths=async()=> {
+  const res = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
+  const data = await res.json()
+  const paths=data.categories.map(async Cat=>{
+  return{
+    params:{ id: Cat.strCategory.toString()}
+  }
+  })
+  return{
+    paths,
+    fallback:false
+  }
+}
+
+export const getStaticProps = async (context) => {
+  const id = context.params.id;
+  const resPlat = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=`+id)
   const dataPlat = await resPlat.json()
-  dataPlat.meals.map(async Plati=>{
-      const resInfo=await fetch(url+`lookup.php?i=${Plati.idMeal}`)
-      const dataInfo=await resInfo.json()
-      Plati.push(dataInfo.meals[0].strArea)
-      console.log(dataPlat.meals)
-})
-  // Pass data to the page via props
-  return { props: { dataCat,dataPlat } }
-}*/
+  return {props: {dataPlat}}
+}
+export default function Home({dataPlat}) {
 
-const Home = () => {
-  const [data, setData] = useState(null)
-  const [dataPlat, setDataPlat] = useState(null)
-  const [dataCat, setDataCat] = useState(null)
-  const [isLoading, setLoading] = useState(false)
-  const [Category, setCategory] = useState("Beef")
-  useEffect(() => {
-    setLoading(true)
-    fetch(url+`filter.php?c=`+Category)
-      .then((res) => res.json())
-      .then((dataPlat) => {
-        setDataPlat(dataPlat)
-        setLoading(false)
-      })
-  }, [])
 
-  if (isLoading) return <p>Loading...</p>
-  if (!dataPlat) return <p>No data</p>
+  
   return (
     <AppLayout>
       <div className='relative py-3 h-12 w-full border-b-2 border-b-gray flex flex-row content-between align-middle items-center bg-white'>
@@ -65,5 +56,5 @@ const Home = () => {
     
   )
 }
-export default Home;
+
 
