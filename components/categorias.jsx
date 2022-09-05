@@ -4,6 +4,7 @@ import { Modal } from '@nextui-org/react';
 import { Router, useRouter } from 'next/router.js';
 import Link from 'next/link'
 import AppLayout from './AppLayout';
+import Spinner from './spinner';
 const url="https://www.themealdb.com/api/json/v1/1/"
 const Categorias = () => {
     //Modal handler
@@ -18,6 +19,7 @@ const Categorias = () => {
     const categoryHandler = (value) => {
         setInfoData(value)
         visible?setVisible(false):setVisible(true)
+        router.push(`/${value}`)
     }
     //fetch Categorias
     const [dataCat, setDataCat] = useState(null)
@@ -34,7 +36,7 @@ const Categorias = () => {
         
     }, [])
     
-    if (isLoading) return <AppLayout><p>Loading...</p></AppLayout>
+    if (isLoading) return <AppLayout><Spinner></Spinner></AppLayout>
     if (!dataCat) return <AppLayout><p>No data</p></AppLayout>
     return ( <div className='btnCategory' onClick={handler}> 
                 <RestaurantIcon className='font-xs text-orange'></RestaurantIcon>
@@ -46,7 +48,7 @@ const Categorias = () => {
         onClose={closeHandler}
     >
         {dataCat.categories.map(Category=>(
-            <Link className=' py-2 my-2 bg-white shadow-sm hover:bg-gray duration-200' value={Category.strCategory} key={Category.idCategory} href={"/"+Category.strCategory.toString()}>{Category.strCategory}</Link>
+            <button className=' py-2 my-2 bg-white shadow-sm hover:bg-gray duration-200' value={Category.strCategory} key={Category.idCategory} onClick={()=>categoryHandler(Category.strCategory.toString())}>{Category.strCategory}</button>
         ))}
   </Modal>
   </div> );
