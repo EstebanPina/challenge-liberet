@@ -7,6 +7,7 @@ import Menu from '../components/Menu';
 import { useEffect,useState } from 'react';
 import MenuBajo from '../components/MenuBajo';
 import BottomMenu from '../components/BottomMenu';
+import Spinner from '../components/spinner';
 const url="https://www.themealdb.com/api/json/v1/1/"
 /*export async function getServerSideProps() {
   // Fetch data from external API
@@ -40,7 +41,7 @@ const Home = () => {
       })
   }, [])
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <AppLayout><Spinner></Spinner></AppLayout>
   if (!dataPlat) return <p>No data</p>
   return (
     <AppLayout>
